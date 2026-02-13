@@ -361,7 +361,7 @@
             <div class="device-mockup">
                 <div class="device-screen">
                     <!-- The video goes INSIDE the device-screen div -->
-                    <video width="100%" height="auto" autoplay loop muted playsinline preload="auto">
+                    <video id="demoVideo" width="100%" height="auto" autoplay muted playsinline preload="auto">
                         <source src="assets/video/demo-video1.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -502,6 +502,17 @@
     </footer>
 
     <script>
+        // Video loop with 3-second pause
+        const demoVideo = document.getElementById('demoVideo');
+        if (demoVideo) {
+            demoVideo.addEventListener('ended', function() {
+                setTimeout(() => {
+                    demoVideo.currentTime = 0;
+                    demoVideo.play();
+                }, 2000); // 2-second pause before restart
+            });
+        }
+
         // Simple Smooth Scroll for Anchor Links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
