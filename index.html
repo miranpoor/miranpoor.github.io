@@ -172,7 +172,6 @@
         /* Mockup container since we don't have images */
         .device-mockup {
             width: 300px;
-            height: 600px;
             background: #111;
             border-radius: 30px;
             margin: 0 auto;
@@ -433,7 +432,7 @@
             <div class="device-mockup">
                 <div class="device-screen">
                     <!-- The video goes INSIDE the device-screen div -->
-                    <video width="100%" height="auto" autoplay loop muted playsinline preload="auto">
+                    <video id="demoVideo" width="100%" height="auto" autoplay muted playsinline preload="auto">
                         <source src="assets/video/demo-video1.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -579,6 +578,17 @@
     </footer>
 
     <script>
+        // Video loop with 3-second pause
+        const demoVideo = document.getElementById('demoVideo');
+        if (demoVideo) {
+            demoVideo.addEventListener('ended', function() {
+                setTimeout(() => {
+                    demoVideo.currentTime = 0;
+                    demoVideo.play();
+                }, 2000); // 2-second pause before restart
+            });
+        }
+
         // Beta waitlist – form submits to your serverless API (no anon policy needed; API uses Supabase service_role).
         // Set this to your Vercel (or other) API URL, e.g. https://your-project.vercel.app/api/waitlist
         const WAITLIST_API_URL = 'YOUR_WAITLIST_API_URL';
