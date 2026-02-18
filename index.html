@@ -9,6 +9,7 @@
         :root {
             --primary-color: #6200EE; /* Matching app purple */
             --secondary-color: #03DAC5; /* Matching app teal */
+            --accent-orange: #FF6B35;
             --dark-bg: #121212;
             --light-bg: #f8f9fa;
             --text-color: #333;
@@ -110,10 +111,19 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--primary-color);
             font-size: 1.5rem;
             font-weight: 800;
-            color: var(--primary-color);
             letter-spacing: -0.5px;
+            gap: 0;
+        }
+        .logo img {
+            height: 36px;
+            width: auto;
+            display: block;
         }
 
         .nav-links {
@@ -316,6 +326,67 @@
             background: #f0f0f0;
         }
 
+        .waitlist-form {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        .waitlist-form .btn-waitlist {
+            background-color: var(--secondary-color);
+            color: var(--dark-bg);
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .waitlist-form .btn-waitlist:hover {
+            background-color: #02b8a8;
+            color: var(--dark-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(3, 218, 197, 0.4);
+        }
+        .waitlist-form .email-input {
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 2px solid rgba(255,255,255,0.5);
+            border-radius: 50px;
+            min-width: 280px;
+            max-width: 100%;
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+        .waitlist-form .email-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        .waitlist-form .email-input:focus {
+            outline: none;
+            border-color: white;
+            background: rgba(255,255,255,0.2);
+        }
+        .waitlist-legal {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.8);
+        }
+        .waitlist-legal a {
+            color: white;
+            text-decoration: underline;
+        }
+        .waitlist-legal a:hover {
+            text-decoration: none;
+        }
+        .waitlist-message {
+            margin-top: 12px;
+            font-size: 0.95rem;
+        }
+        .waitlist-message.success { color: #a5d6a7; }
+        .waitlist-message.error { color: #ffab91; }
+
         /* Footer */
         footer {
             background: #1a1a1a;
@@ -485,9 +556,14 @@
 
     <section id="download" class="cta">
         <div class="container">
-            <h2>Start Organizing Your Memories Today</h2>
-            <p>Join thousands of users reclaiming their photo galleries. Secure, smart, and free.</p>
-            <a href="#" onclick="alert('Thank you for your interest! The download link will be available soon.'); return false;" class="btn">Download Now</a>
+            <h2>Reserve Your Spot for Beta Launch</h2>
+            <p>Beta launching April 1, 2026. Join the waitlist today and be among the first to reclaim your photo gallery. Secure, smart, and free.</p>
+            <form id="waitlist-form" class="waitlist-form">
+                <input type="email" class="email-input" name="email" placeholder="Enter your email" required>
+                <button type="submit" class="btn-waitlist" id="waitlist-btn">Join Beta Waitlist</button>
+            </form>
+            <p id="waitlist-message" class="waitlist-message" style="display: none;"></p>
+            <p class="waitlist-legal">By joining, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
         </div>
     </section>
 
@@ -503,6 +579,66 @@
     </footer>
 
     <script>
+        // Beta waitlist – form submits to your serverless API (no anon policy needed; API uses Supabase service_role).
+        // Set this to your Vercel (or other) API URL, e.g. https://your-project.vercel.app/api/waitlist
+        const WAITLIST_API_URL = 'YOUR_WAITLIST_API_URL';
+
+        const waitlistForm = document.getElementById('waitlist-form');
+        const waitlistBtn = document.getElementById('waitlist-btn');
+        const waitlistMessage = document.getElementById('waitlist-message');
+
+        if (waitlistForm && WAITLIST_API_URL && !WAITLIST_API_URL.startsWith('YOUR_')) {
+            waitlistForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const emailInput = waitlistForm.querySelector('input[name="email"]');
+                const email = (emailInput && emailInput.value) ? emailInput.value.trim() : '';
+                if (!email) return;
+
+                waitlistMessage.style.display = 'none';
+                waitlistMessage.className = 'waitlist-message';
+                waitlistBtn.disabled = true;
+                waitlistBtn.textContent = 'Joining…';
+
+                let resp;
+                try {
+                    resp = await fetch(WAITLIST_API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email })
+                    });
+                } catch (err) {
+                    waitlistBtn.disabled = false;
+                    waitlistBtn.textContent = 'Join Beta Waitlist';
+                    waitlistMessage.style.display = 'block';
+                    waitlistMessage.className = 'waitlist-message error';
+                    waitlistMessage.textContent = 'Network error. Please try again.';
+                    return;
+                }
+
+                const data = await resp.json().catch(() => ({}));
+                waitlistBtn.disabled = false;
+                waitlistBtn.textContent = 'Join Beta Waitlist';
+
+                if (resp.ok) {
+                    waitlistMessage.style.display = 'block';
+                    waitlistMessage.className = 'waitlist-message success';
+                    waitlistMessage.textContent = 'Thank you! You’re on the beta waitlist.';
+                    emailInput.value = '';
+                } else {
+                    waitlistMessage.style.display = 'block';
+                    waitlistMessage.className = 'waitlist-message error';
+                    waitlistMessage.textContent = (data && data.error) || 'Something went wrong. Please try again.';
+                }
+            });
+        } else if (waitlistForm) {
+            waitlistForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                waitlistMessage.style.display = 'block';
+                waitlistMessage.className = 'waitlist-message';
+                waitlistMessage.textContent = 'Set WAITLIST_API_URL in the code to your API URL (see README or setup docs).';
+            });
+        }
+
         // Simple Smooth Scroll for Anchor Links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
