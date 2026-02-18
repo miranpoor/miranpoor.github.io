@@ -340,6 +340,7 @@
             background-color: var(--secondary-color);
             color: var(--dark-bg);
             padding: 12px 24px;
+            width: 180px;
             font-size: 1rem;
             font-weight: 600;
             border: none;
@@ -562,7 +563,7 @@
         <div class="container">
             <h2>Reserve Your Spot for Beta Launch</h2>
             <p>Beta launching April 1, 2026. Join the waitlist today and be among the first to reclaim your Memoyad. Secure, smart, and free.</p>
-            <form id="waitlist-form" class="waitlist-form">
+            <form id="waitlist-form" class="waitlist-form" action="https://formspree.io/f/xvzbqdgb" method="POST">
                 <input type="email" class="email-input" name="email" placeholder="Enter your email" required>
                 <button type="submit" class="btn-waitlist" id="waitlist-btn">Join Beta Waitlist</button>
             </form>
@@ -594,63 +595,53 @@
             });
         }
 
-        // Beta waitlist – form submits to your serverless API (no anon policy needed; API uses Supabase service_role).
-        // Set this to your Vercel (or other) API URL, e.g. https://your-project.vercel.app/api/waitlist
-        const WAITLIST_API_URL = 'YOUR_WAITLIST_API_URL';
+        // Beta waitlist – submissions handled by Formspree
 
         const waitlistForm = document.getElementById('waitlist-form');
         const waitlistBtn = document.getElementById('waitlist-btn');
         const waitlistMessage = document.getElementById('waitlist-message');
 
-        if (waitlistForm && WAITLIST_API_URL && !WAITLIST_API_URL.startsWith('YOUR_')) {
-            waitlistForm.addEventListener('submit', async (e) => {
+        if (waitlistForm) {
+            waitlistForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const emailInput = waitlistForm.querySelector('input[name="email"]');
-                const email = (emailInput && emailInput.value) ? emailInput.value.trim() : '';
-                if (!email) return;
 
                 waitlistMessage.style.display = 'none';
                 waitlistMessage.className = 'waitlist-message';
                 waitlistBtn.disabled = true;
-                waitlistBtn.textContent = 'Joining…';
+                waitlistBtn.textContent = 'Submitting\u2026';
 
-                let resp;
-                try {
-                    resp = await fetch(WAITLIST_API_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email })
-                    });
-                } catch (err) {
+                const data = new FormData(waitlistForm);
+
+                fetch(waitlistForm.action, {
+                    method: waitlistForm.method,
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                }).then(response => {
+                    waitlistBtn.disabled = false;
+                    waitlistBtn.textContent = 'Join Beta Waitlist';
+                    waitlistMessage.style.display = 'block';
+
+                    if (response.ok) {
+                        waitlistMessage.className = 'waitlist-message success';
+                        waitlistMessage.textContent = "Thank you! You're on the beta waitlist.";
+                        waitlistForm.reset();
+                    } else {
+                        response.json().then(errData => {
+                            waitlistMessage.className = 'waitlist-message error';
+                            if (Object.hasOwn(errData, 'errors')) {
+                                waitlistMessage.textContent = errData['errors'].map(err => err['message']).join(', ');
+                            } else {
+                                waitlistMessage.textContent = 'Something went wrong. Please try again.';
+                            }
+                        });
+                    }
+                }).catch(() => {
                     waitlistBtn.disabled = false;
                     waitlistBtn.textContent = 'Join Beta Waitlist';
                     waitlistMessage.style.display = 'block';
                     waitlistMessage.className = 'waitlist-message error';
                     waitlistMessage.textContent = 'Network error. Please try again.';
-                    return;
-                }
-
-                const data = await resp.json().catch(() => ({}));
-                waitlistBtn.disabled = false;
-                waitlistBtn.textContent = 'Join Beta Waitlist';
-
-                if (resp.ok) {
-                    waitlistMessage.style.display = 'block';
-                    waitlistMessage.className = 'waitlist-message success';
-                    waitlistMessage.textContent = 'Thank you! You’re on the beta waitlist.';
-                    emailInput.value = '';
-                } else {
-                    waitlistMessage.style.display = 'block';
-                    waitlistMessage.className = 'waitlist-message error';
-                    waitlistMessage.textContent = (data && data.error) || 'Something went wrong. Please try again.';
-                }
-            });
-        } else if (waitlistForm) {
-            waitlistForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                waitlistMessage.style.display = 'block';
-                waitlistMessage.className = 'waitlist-message';
-                waitlistMessage.textContent = 'Set WAITLIST_API_URL in the code to your API URL (see README or setup docs).';
+                });
             });
         }
 
