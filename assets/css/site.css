@@ -424,7 +424,8 @@ nav {
     padding: 140px 0 80px;          /* clears the fixed header */
     background: linear-gradient(180deg, var(--light-bg) 0, var(--white) 320px);
 }
-.page .container { max-width: 760px; }
+/* Same width as the home page (the shared .container), so every page's content lines up with
+   the header logo. */
 .page h1 { font-size: 2.4rem; letter-spacing: -0.5px; margin-bottom: 0.4rem; color: var(--text-color); }
 .page h2 { font-size: 1.3rem; text-align: left; margin: 2.2em 0 0.5em; color: var(--text-color); }
 .page p, .page li { color: var(--text-color); font-size: 1.05rem; line-height: 1.7; }
@@ -454,7 +455,7 @@ nav {
 }
 
 /* ---------- Contact form ---------- */
-.contact-form { display: grid; gap: 18px; margin-top: 8px; }
+.contact-form { display: grid; gap: 18px; margin-top: 8px; max-width: 720px; }  /* fields stay a comfortable width */
 .contact-form label { display: grid; gap: 6px; font-weight: 600; font-size: 0.95rem; color: var(--text-color); }
 .contact-form .optional { font-weight: 400; color: var(--text-light); }
 .contact-form input, .contact-form textarea {

@@ -4,12 +4,16 @@
     <!-- Master layout for every page. Page files hold only their content plus a front-matter block
          (title, description, optional og_title). Header and footer: _includes/. Styles: assets/css/site.css. -->
     <meta charset="UTF-8">
+    <!-- Every shared asset URL carries ?v=<build time>. GitHub Pages lets browsers reuse files for
+         10 minutes without asking (Cache-Control: max-age=600), so without it a changed logo or
+         stylesheet showed the OLD version on the next page until a hard refresh. Each push rebuilds
+         with a new time, so every changed file gets a new URL. Keep it on anything added here. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% if page.url == "/" %}{{ page.title }}{% else %}{{ page.title }} · Memoyad{% endif %}</title>
     <meta name="description" content="{{ page.description }}">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="alternate icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v={{ site.time | date: '%s' }}">
+    <link rel="alternate icon" href="/favicon.ico?v={{ site.time | date: '%s' }}">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v={{ site.time | date: '%s' }}">
     <meta name="theme-color" content="#3A3FC4">
     <link rel="canonical" href="{{ site.url }}{{ page.url }}">
     <meta property="og:type" content="website">
@@ -22,12 +26,12 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="The Memoyad app icon and the words: Find any memory by simply describing it.">
     <meta name="twitter:card" content="summary_large_image">
-    <link rel="stylesheet" href="/assets/css/site.css">
+    <link rel="stylesheet" href="/assets/css/site.css?v={{ site.time | date: '%s' }}">
 </head>
 <body>
 {% include header.html %}
 {{ content }}
 {% include footer.html %}
-    <script src="/assets/js/site.js"></script>
+    <script src="/assets/js/site.js?v={{ site.time | date: '%s' }}"></script>
 </body>
 </html>
