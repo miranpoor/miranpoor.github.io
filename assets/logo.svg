@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 40" fill="none" role="img" aria-label="Memoyad">
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="40" viewBox="0 0 180 40" fill="none" role="img" aria-label="Memoyad">
   <!-- Memoyad logo: app icon tile + wordmark. Colors and rules: BRAND.md. Icon geometry comes from
        the Android app's tools/icon/gen.py; regenerate both together if the icon changes. -->
   <defs>

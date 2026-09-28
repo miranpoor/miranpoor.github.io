@@ -4,11 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memoyad - AI-Powered, Privacy-First Media search and Organizer</title>
-    <meta name="description" content="Search and Organize your Media using Natural language. 100% on-device, privacy-first, and free forever core features.">
+    <meta name="description" content="Search and organize your media using natural language. 100% on-device, privacy-first, with free-forever core features.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="alternate icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <meta name="theme-color" content="#3A3FC4">
+    <link rel="canonical" href="https://memoyad.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://memoyad.com/">
+    <meta property="og:title" content="Memoyad: find any memory by describing it">
+    <meta property="og:description" content="Private, on-device AI search for your photos and screenshots. Nothing is uploaded.">
+    <meta property="og:image" content="https://memoyad.com/assets/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="The Memoyad app icon and the words: Find any memory by simply describing it.">
+    <meta name="twitter:card" content="summary_large_image">
     <style>
         :root {
             /* Brand palette "Indigo": see BRAND.md. Same values as the Android app (ui/theme/Color.kt). */
@@ -309,8 +319,17 @@
             font-weight: 700;
         }
 
-        .check { color: green; }
-        .cross { color: red; }
+        /* Four columns fit a phone once the 20px cell padding shrinks. */
+        @media (max-width: 600px) {
+            .comparison-table th, .comparison-table td {
+                padding: 12px 6px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Semantic, not brand (BRAND.md): both pass 4.5:1 on white. */
+        .check { color: #1B7F3B; }
+        .cross { color: #C62828; }
 
         /* CTA */
         .cta {
@@ -433,10 +452,10 @@
 
     <section class="hero">
         <div class="container">
-            <h1>Search and Organize Your Memories with Natural Language.</h1>
+            <h1>Find Any Memory by Simply Describing It.</h1>
             <p>100% On-Device. 100% Private. Free Forever.</p>
             <div style="display: flex; gap: 15px; justify-content: center; margin-bottom: 40px;">
-                <a href="#download" class="btn btn-primary">Download for Android</a>
+                <a href="#download" class="btn btn-primary">Join the Android Beta</a>
                 <a href="#download" class="btn btn-outline">Join iOS Waitlist</a>
             </div>
             <div class="device-mockup">
@@ -458,27 +477,42 @@
                 <div class="feature-card">
                     <div class="icon">🔍</div>
                     <h3>Natural Language Search</h3>
-                    <p>Forget scrolling. Just ask. Search for "road trips with kids in summer" or "receipts from last March". Our advanced AI understands complex queries instantly.</p>
+                    <p>Forget scrolling. Describe what you remember, in your own words: "road trips with kids in summer", "the whiteboard from Tuesday's meeting", "receipts from the hardware store".</p>
                 </div>
                 <div class="feature-card">
                     <div class="icon">🔒</div>
                     <h3>Privacy First & Offline</h3>
-                    <p>Your media (photos, videos, audios) never leave your phone. All AI processing happens locally on your device. No cloud uploads, no data mining, no internet required.</p>
+                    <p>Your media never leave your phone. Analysis and search run entirely on your device, with no cloud uploads and no data mining. After a one-time download of the AI models, no internet connection is needed.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="icon">📂</div>
-                    <h3>Auto-Organized Diary</h3>
-                    <p>Memoyad automatically structures your messy photo gallery into a meaningful life diary. Rediscover forgotten memories without doing the work.</p>
+                    <div class="icon">🧾</div>
+                    <h3>Finds Text in Images</h3>
+                    <p>Receipts, documents, screenshots, notes and signs. Search for what they say, not just what they show.</p>
                 </div>
                 <div class="feature-card">
                     <div class="icon">🌍</div>
-                    <h3>Multilingual Support</h3>
-                    <p>Search in your native language. Our models understand global languages natively, ensuring accurate results no matter what language you speak.</p>
+                    <h3>Search in Your Language</h3>
+                    <p>Describe what you are looking for in English, Persian (Farsi) or many other languages, and Memoyad understands.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🔄</div>
+                    <h3>Works in the Background</h3>
+                    <p>New photos are analyzed on their own as you take them, or only when you choose. You can keep using your phone while it works.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🔋</div>
+                    <h3>Gentle on Your Battery</h3>
+                    <p>Analysis pauses when your battery runs low or your phone gets warm, and you choose how fast it runs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">👤</div>
+                    <h3>No Account Needed</h3>
+                    <p>No sign-up, no login, no email address. Install it and start searching.</p>
                 </div>
                 <div class="feature-card">
                     <div class="icon">📱</div>
-                    <h3>Cross-Platform</h3>
-                    <p>Designed for both Android and iOS. A unified experience across all your mobile devices without being locked into one ecosystem.</p>
+                    <h3>Android First, iOS Next</h3>
+                    <p>Memoyad is launching on Android. An iOS version is on the way; join the waitlist to hear when it is ready.</p>
                 </div>
                 <div class="feature-card">
                     <div class="icon">✨</div>
@@ -492,27 +526,27 @@
     <section id="how-it-works" class="how-it-works">
         <div class="container">
             <h2>How It Works</h2>
-            <p class="text-center" style="max-width: 600px; margin: 0 auto 3rem;">We use optimized large language models that run right on your phone.</p>
+            <p class="text-center" style="max-width: 600px; margin: 0 auto 3rem;">Everything happens on your phone. Nothing is uploaded, ever.</p>
             <div class="steps">
                 <div class="step">
                     <div class="step-number">1</div>
                     <div>
-                        <h3>Analyze</h3>
-                        <p>Memoyad scans your media (photos, videos, audios) locally, generating detailed descriptions using advanced AI models.</p>
+                        <h3>Set up once</h3>
+                        <p>Install Memoyad and let it go through your photos, screenshots and documents once. It runs on your phone and keeps up with new ones as they arrive.</p>
                     </div>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
                     <div>
-                        <h3>Index</h3>
-                        <p>It creates a smart "semantic" index. Instead of just tags, it understands context, emotions, and actions.</p>
+                        <h3>Describe it</h3>
+                        <p>Type what you remember the way you would say it to a friend. No keywords, folders or tags needed.</p>
                     </div>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
                     <div>
-                        <h3>Search</h3>
-                        <p>You type a wish like "photos of me and dad laughing in 2022", and the app finds the exact moments instantly.</p>
+                        <h3>Find it</h3>
+                        <p>Memoyad shows the best matches right away, like "me and dad laughing at the beach", or the parking receipt you need.</p>
                     </div>
                 </div>
             </div>
@@ -541,21 +575,21 @@
                         </tr>
                         <tr>
                             <td><strong>Search Capability</strong></td>
-                            <td><span class="check">✔ Complex Sentences</span></td>
+                            <td><span class="check">✔ Describe it in your own words</span></td>
                             <td><span class="check">✔ Good</span></td>
                             <td><span class="cross">✘ Basic Keywords</span></td>
                         </tr>
                         <tr>
                             <td><strong>Cost</strong></td>
-                            <td><span class="check">✔ Free Core / No Storage Fees</span></td>
-                            <td><span class="cross">✘ Monthly Subscription</span></td>
+                            <td><span class="check">✔ Free core, no storage fees</span></td>
+                            <td><span class="cross">✘ Storage fees beyond the free tier</span></td>
                             <td><span class="check">✔ Free</span></td>
                         </tr>
                         <tr>
                             <td><strong>Offline Access</strong></td>
-                            <td><span class="check">✔ Full Funcionality</span></td>
+                            <td><span class="check">✔ Works fully offline</span></td>
                             <td><span class="cross">✘ Limited</span></td>
-                            <td><span class="check">✔ Generic</span></td>
+                            <td><span class="check">✔ Browsing only</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -566,23 +600,23 @@
     <section id="download" class="cta">
         <div class="container">
             <h2>Reserve Your Spot for Beta Launch</h2>
-            <p>Beta launching October 31, 2026. Join the waitlist today and be among the first to reclaim your Memoyad. Secure, smart, and free.</p>
+            <p>Beta launching October 31, 2026. Join the waitlist and be among the first to try Memoyad. Private, smart, and free.</p>
             <form id="waitlist-form" class="waitlist-form" action="https://formspree.io/f/xvzbqdgb" method="POST">
                 <input type="email" class="email-input" name="email" placeholder="Enter your email" required>
                 <button type="submit" class="btn-waitlist" id="waitlist-btn">Join Beta Waitlist</button>
             </form>
             <p id="waitlist-message" class="waitlist-message" style="display: none;"></p>
-            <p class="waitlist-legal">By joining, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+            <p class="waitlist-legal">By joining, you agree to our <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.</p>
         </div>
     </section>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 Memoyad. All rights reserved.</p>
+            <p>&copy; 2026 Tibaf Inc. All rights reserved.</p>
             <div style="margin-top: 10px;">
-                <a href="#" style="color: #666; margin: 0 10px; text-decoration: none;">Privacy Policy</a>
-                <a href="#" style="color: #666; margin: 0 10px; text-decoration: none;">Terms of Service</a>
-                <a href="#" style="color: #666; margin: 0 10px; text-decoration: none;">Contact</a>
+                <a href="privacy.html" style="color: #B8B8C4; margin: 0 10px; text-decoration: none;">Privacy Policy</a>
+                <a href="terms.html" style="color: #B8B8C4; margin: 0 10px; text-decoration: none;">Terms of Service</a>
+                <a href="contact.html" style="color: #B8B8C4; margin: 0 10px; text-decoration: none;">Contact</a>
             </div>
         </div>
     </footer>

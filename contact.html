@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#3A3FC4">
+<title>Contact · Memoyad</title>
+<meta name="description" content="Questions, feedback or a problem with Memoyad? Send us a message.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  /* Colors: BRAND.md. */
+  :root { --brand: #3A3FC4; --on-brand: #FFFFFF; --brand-hover: #2C318F; --text: #1B1B21; --muted: #46464F;
+          --bg: #FFFFFF; --panel: #F4F4FC; --line: #C7C5D0; --ok: #1B7F3B; --err: #C62828; }
+  @media (prefers-color-scheme: dark) {
+    :root { --brand: #BDC2FF; --on-brand: #141A7A; --brand-hover: #E0E1FF; --text: #E4E1EA; --muted: #C7C5D0;
+            --bg: #121320; --panel: #1B1C2A; --line: #46464F; --ok: #7BD88F; --err: #FFB4AB; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 48px 16px 80px; }
+  a { color: var(--brand); }
+  h1 { font-size: 2.1rem; line-height: 1.2; margin: 0 0 8px; letter-spacing: -0.5px; }
+  .lede { color: var(--muted); margin: 0 0 28px; }
+  form { display: grid; gap: 18px; }
+  label { display: grid; gap: 6px; font-weight: 600; font-size: 0.95rem; }
+  label .lbl span { font-weight: 400; color: var(--muted); }
+  input, textarea { font: inherit; color: var(--text); background: var(--panel); border: 1.5px solid var(--line);
+                    border-radius: 10px; padding: 12px 14px; width: 100%; }
+  textarea { min-height: 160px; resize: vertical; }
+  input:focus, textarea:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 25%, transparent); }
+  button { justify-self: start; font: inherit; font-weight: 600; color: var(--on-brand); background: var(--brand);
+           border: 0; border-radius: 999px; padding: 12px 28px; cursor: pointer; }
+  button:hover { background: var(--brand-hover); }
+  button:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+  button:disabled { opacity: 0.6; cursor: default; }
+  .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  #status { margin: 4px 0 0; min-height: 1.6em; }
+  #status.ok { color: var(--ok); }
+  #status.err { color: var(--err); }
+  .alt { margin-top: 36px; color: var(--muted); font-size: 0.95rem; }
+</style>
+</head>
+<body>
+<main>
+  <p><a href="/">← Memoyad</a></p>
+  <h1>Contact us</h1>
+  <p class="lede">Questions, feedback, or something not working? Send us a message and we will reply by email.
+  If the app misbehaves, sending a report from <em>Settings &gt; Send Diagnostics</em> in the app helps us most.</p>
+
+  <!-- Formspree form. To give contact messages their own inbox, create a new form in Formspree and
+       replace the ID in the action URL below (currently the waitlist form, with a distinct subject). -->
+  <form id="contact-form" action="https://formspree.io/f/xvzbqdgb" method="POST">
+    <input type="hidden" name="_subject" value="Memoyad contact form">
+    <input type="hidden" name="form" value="contact">
+    <label for="c-name"><span class="lbl">Name <span>(optional)</span></span>
+      <input id="c-name" name="name" type="text" autocomplete="name">
+    </label>
+    <label for="c-email">Email
+      <input id="c-email" name="email" type="email" autocomplete="email" required>
+    </label>
+    <label for="c-message">Message
+      <textarea id="c-message" name="message" required></textarea>
+    </label>
+    <!-- Spam trap: people never see or fill it; Formspree drops submissions that do. -->
+    <div class="hp" aria-hidden="true"><label for="c-gotcha">Leave empty<input id="c-gotcha" name="_gotcha" type="text" tabindex="-1" autocomplete="off"></label></div>
+    <button type="submit" id="c-send">Send message</button>
+    <p id="status" role="status" aria-live="polite"></p>
+  </form>
+
+  <p class="alt">Prefer email? Write to <a href="mailto:miranpour@tibaf.com">miranpour@tibaf.com</a>.
+  We use what you send only to reply to you; see the <a href="privacy.html">Privacy Policy</a>.</p>
+</main>
+<script>
+  const form = document.getElementById('contact-form');
+  const button = document.getElementById('c-send');
+  const status = document.getElementById('status');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    status.className = ''; status.textContent = '';
+    button.disabled = true; button.textContent = 'Sending…';
+    fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+      .then(async (response) => {
+        if (response.ok) {
+          status.className = 'ok';
+          status.textContent = 'Thanks! Your message was sent. We will reply by email.';
+          form.reset();
+        } else {
+          const data = await response.json().catch(() => ({}));
+          status.className = 'err';
+          status.textContent = (data.errors || []).map(x => x.message).join(', ') ||
+            'Your message could not be sent. Please try again, or email us instead.';
+        }
+      })
+      .catch(() => {
+        status.className = 'err';
+        status.textContent = 'Your message could not be sent. Check your connection and try again, or email us instead.';
+      })
+      .finally(() => { button.disabled = false; button.textContent = 'Send message'; });
+  });
+</script>
+</body>
+</html>

@@ -50,7 +50,7 @@ Pick them for meaning and contrast, not to match the palette.
 | File | What it is |
 |---|---|
 | `assets/logo.svg` | Header logo: the icon tile plus the "Memoyad" wordmark in Indigo, 180×40 |
-| `favicon.svg` | Browser icon: the icon tile with rounded corners |
+| `favicon.svg` | Browser icon: the icon tile with rounded corners. Keep its zero-origin `viewBox` and explicit `width`/`height`; an offset viewBox without them rendered cut in half in browser tabs |
 | `favicon.ico` | Fallback favicon, 16/32/48 px |
 | `apple-touch-icon.png` | iOS home-screen icon, 180×180, square (iOS rounds it) |
 
