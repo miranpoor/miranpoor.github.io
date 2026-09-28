@@ -1,724 +1,166 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memoyad - AI-Powered, Privacy-First Media search and Organizer</title>
-    <meta name="description" content="Search and organize your media using natural language. 100% on-device, privacy-first, with free-forever core features.">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="alternate icon" href="favicon.ico">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <meta name="theme-color" content="#3A3FC4">
-    <link rel="canonical" href="https://memoyad.com/">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://memoyad.com/">
-    <meta property="og:title" content="Memoyad: find any memory by describing it">
-    <meta property="og:description" content="Private, on-device AI search for your photos and screenshots. Nothing is uploaded.">
-    <meta property="og:image" content="https://memoyad.com/assets/og-image.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="The Memoyad app icon and the words: Find any memory by simply describing it.">
-    <meta name="twitter:card" content="summary_large_image">
-    <style>
-        :root {
-            /* Brand palette "Indigo": see BRAND.md. Same values as the Android app (ui/theme/Color.kt). */
-            --primary-color: #3A3FC4;      /* Indigo: text links, buttons, logo wordmark */
-            --primary-dark: #2C318F;       /* hover / pressed */
-            --primary-container: #E0E1FF;  /* tinted backgrounds, chips */
-            --secondary-color: #1CA7D4;    /* Sky: gradient end ONLY, never behind or as text */
-            --sky-deep: #00658A;           /* text-safe partner for gradient text */
-            --dark-bg: #121320;
-            --light-bg: #FAFAFF;
-            --text-color: #1B1B21;
-            --text-light: #46464F;
-            --white: #ffffff;
-            --max-width: 1200px;
-            --transition: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--white);
-        }
-
-        /* Typography */
-        h1, h2, h3, h4 {
-            line-height: 1.2;
-            margin-bottom: 1rem;
-            color: #1a1a1a;
-        }
-
-        h1 { font-size: 2.5rem; font-weight: 800; }
-        h2 { font-size: 2rem; margin-bottom: 2rem; text-align: center; }
-        h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; }
-        p { margin-bottom: 1rem; color: var(--text-light); }
-
-        /* Layout Utilities */
-        .container {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        section {
-            padding: 5rem 0;
-        }
-
-        .text-center { text-align: center; }
-
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 50px;
-            transition: var(--transition);
-            cursor: pointer;
-            border: 2px solid transparent;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: var(--white);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(58, 63, 196, 0.3);
-        }
-
-        .btn-outline {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-            background: transparent;
-        }
-
-        .btn-outline:hover {
-            background-color: var(--primary-color);
-            color: var(--white);
-        }
-
-        /* Header / Nav */
-        header {
-            padding: 20px 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            gap: 0;
-        }
-        .logo img {
-            height: 36px;
-            width: auto;
-            display: block;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding-top: 160px;
-            padding-bottom: 100px;
-            text-align: center;
-            background: linear-gradient(135deg, var(--light-bg) 0%, var(--primary-container) 100%);
-            border-radius: 0 0 50% 50% / 4%;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            max-width: 800px;
-            margin: 0 auto 1.5rem;
-            background: -webkit-linear-gradient(45deg, var(--primary-color), var(--sky-deep));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            max-width: 600px;
-            margin: 0 auto 2.5rem;
-        }
-
-        .hero-image {
-            margin-top: 50px;
-            max-width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        /* Mockup container since we don't have images */
-        .device-mockup {
-            width: 300px;
-            background: #111;
-            border-radius: 30px;
-            margin: 0 auto;
-            position: relative;
-            border: 8px solid #333;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #555;
-            flex-direction: column;
-        }
-
-        .device-screen {
-            background: #000;
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-
-        .mock-search-bar {
-            height: 40px;
-            background: #f0f0f0;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            padding: 0 15px;
-            font-size: 0.8rem;
-            color: #888;
-        }
-
-        .mock-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .mock-item {
-            aspect-ratio: 1;
-            background: #eee;
-            border-radius: 10px;
-        }
-
-        /* Features */
-        .features {
-            background-color: var(--white);
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-
-        .feature-card {
-            padding: 30px;
-            border-radius: 20px;
-            background: var(--light-bg);
-            transition: var(--transition);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        .icon {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-        }
-
-        /* How it Works */
-        .how-it-works {
-            background-color: var(--light-bg);
-        }
-
-        .steps {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .step {
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-        }
-
-        .step-number {
-            background: var(--primary-color);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        /* Comparison */
-        .comparison {
-            background-color: var(--white);
-        }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-        }
-
-        .comparison-table th, .comparison-table td {
-            padding: 20px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-
-        .comparison-table th {
-            background: var(--light-bg);
-            font-weight: 700;
-        }
-
-        /* Four columns fit a phone once the 20px cell padding shrinks. */
-        @media (max-width: 600px) {
-            .comparison-table th, .comparison-table td {
-                padding: 12px 6px;
-                font-size: 0.85rem;
-            }
-        }
-
-        /* Semantic, not brand (BRAND.md): both pass 4.5:1 on white. */
-        .check { color: #1B7F3B; }
-        .cross { color: #C62828; }
-
-        /* CTA */
-        .cta {
-            background-color: var(--primary-color);
-            text-align: center;
-            color: white;
-            padding: 80px 0;
-        }
-
-        .cta h2 { color: white; }
-        .cta p { color: rgba(255,255,255,0.9); margin-bottom: 30px; }
-
-        .cta .btn {
-            background: white;
-            color: var(--primary-color);
-        }
-
-        .cta .btn:hover {
-            background: #f0f0f0;
-        }
-
-        .waitlist-form {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 16px;
-        }
-        .waitlist-form .btn-waitlist {
-            background-color: var(--white);
-            color: var(--primary-color);
-            padding: 12px 24px;
-            width: 180px;
-            font-size: 1rem;
-            font-weight: 600;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-        .waitlist-form .btn-waitlist:hover {
-            background-color: var(--primary-container);
-            color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(18, 19, 32, 0.25);
-        }
-        .waitlist-form .email-input {
-            padding: 12px 20px;
-            font-size: 1rem;
-            border: 2px solid rgba(255,255,255,0.5);
-            border-radius: 50px;
-            min-width: 280px;
-            max-width: 100%;
-            background: rgba(255,255,255,0.15);
-            color: white;
-        }
-        .waitlist-form .email-input::placeholder {
-            color: rgba(255,255,255,0.7);
-        }
-        .waitlist-form .email-input:focus {
-            outline: none;
-            border-color: white;
-            background: rgba(255,255,255,0.2);
-        }
-        .waitlist-legal {
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.8);
-        }
-        .waitlist-legal a {
-            color: white;
-            text-decoration: underline;
-        }
-        .waitlist-legal a:hover {
-            text-decoration: none;
-        }
-        .waitlist-message {
-            margin-top: 12px;
-            font-size: 0.95rem;
-        }
-        .waitlist-message.success { color: #a5d6a7; }
-        .waitlist-message.error { color: #FFC4B3; }
-
-        /* Footer */
-        footer {
-            background: #1a1a1a;
-            color: #888;
-            padding: 40px 0;
-            text-align: center;
-        }
-
-        footer p { color: #888; font-size: 0.9rem; }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .nav-links { display: none; }
-            .step { flex-direction: column; text-align: center; align-items: center; }
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <img src="assets/logo.svg" alt="Memoyad" height="36">
-                </div>
-                <div class="nav-links">
-                    <a href="#features">Features</a>
-                    <!--<a href="#privacy">Privacy</a>-->
-                    <a href="#comparison">Why Us</a>
-                    <a href="#download">Download</a>
-                </div>
-                <a href="#download" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Get App</a>
-            </nav>
+---
+layout: default
+title: "Memoyad: Private, On-Device Media Search"
+og_title: "Memoyad: find any memory by describing it"
+description: Find any memory in your gallery by describing it. 100% on-device and private, with free-forever core features.
+og_description: Private, on-device AI search for your photos and screenshots. Nothing is uploaded.
+---
+<section class="hero">
+    <div class="container">
+        <h1>Find Any Memory by Simply Describing It.</h1>
+        <p>100% On-Device. 100% Private. Free Forever.</p>
+        <div class="hero-actions">
+            <a href="#download" class="btn btn-primary">Join the Android Beta</a>
+            <a href="#download" class="btn btn-outline">Join iOS Waitlist</a>
         </div>
-    </header>
+        <div class="device-mockup">
+            <div class="device-screen">
+                <!-- The video goes INSIDE the device-screen div -->
+                <video id="demoVideo" width="100%" height="auto" autoplay muted playsinline preload="auto">
+                    <source src="assets/video/demo-video1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div> <!-- Close device-screen -->
+        </div> <!-- Close device-mockup -->            
+    </div>
+</section>
 
-    <section class="hero">
-        <div class="container">
-            <h1>Find Any Memory by Simply Describing It.</h1>
-            <p>100% On-Device. 100% Private. Free Forever.</p>
-            <div style="display: flex; gap: 15px; justify-content: center; margin-bottom: 40px;">
-                <a href="#download" class="btn btn-primary">Join the Android Beta</a>
-                <a href="#download" class="btn btn-outline">Join iOS Waitlist</a>
+<section id="features" class="features">
+    <div class="container">
+        <h2>Everything you need, nothing breaks your privacy.</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="icon">🔍</div>
+                <h3>Natural Language Search</h3>
+                <p>Forget scrolling. Describe what you remember, in your own words: "road trips with kids in summer", "the whiteboard from Tuesday's meeting", "receipts from the hardware store".</p>
             </div>
-            <div class="device-mockup">
-                <div class="device-screen">
-                    <!-- The video goes INSIDE the device-screen div -->
-                    <video id="demoVideo" width="100%" height="auto" autoplay muted playsinline preload="auto">
-                        <source src="assets/video/demo-video1.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div> <!-- Close device-screen -->
-            </div> <!-- Close device-mockup -->            
+            <div class="feature-card">
+                <div class="icon">🔒</div>
+                <h3>Privacy First & Offline</h3>
+                <p>Your media never leave your phone. Analysis and search run entirely on your device, with no cloud uploads and no data mining. After a one-time download of the AI models, no internet connection is needed.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🧾</div>
+                <h3>Finds Text in Images</h3>
+                <p>Receipts, documents, screenshots, notes and signs. Search for what they say, not just what they show.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🌍</div>
+                <h3>Search in Your Language</h3>
+                <p>Describe what you are looking for in English, Persian (Farsi) or many other languages, and Memoyad understands.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🔄</div>
+                <h3>Works in the Background</h3>
+                <p>New photos are analyzed on their own as you take them, or only when you choose. You can keep using your phone while it works.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🔋</div>
+                <h3>Gentle on Your Battery</h3>
+                <p>Analysis pauses when your battery runs low or your phone gets warm, and you choose how fast it runs.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">👤</div>
+                <h3>No Account Needed</h3>
+                <p>No sign-up, no login, no email address. Install it and start searching.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">📱</div>
+                <h3>Android First, iOS Next</h3>
+                <p>Memoyad is launching on Android. An iOS version is on the way; join the waitlist to hear when it is ready.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">✨</div>
+                <h3>Free Forever Core</h3>
+                <p>Because our AI runs on your hardware, we don't have massive cloud bills. We pass those savings to you with a generous free-forever tier.</p>
+            </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section id="features" class="features">
-        <div class="container">
-            <h2>Everything you need, nothing breaks your privacy.</h2>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="icon">🔍</div>
-                    <h3>Natural Language Search</h3>
-                    <p>Forget scrolling. Describe what you remember, in your own words: "road trips with kids in summer", "the whiteboard from Tuesday's meeting", "receipts from the hardware store".</p>
+<section id="how-it-works" class="how-it-works">
+    <div class="container">
+        <h2>How It Works</h2>
+        <p class="text-center" style="max-width: 600px; margin: 0 auto 3rem;">Everything happens on your phone. Nothing is uploaded, ever.</p>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div>
+                    <h3>Set up once</h3>
+                    <p>Install Memoyad and let it go through your photos, screenshots and documents once. It runs on your phone and keeps up with new ones as they arrive.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="icon">🔒</div>
-                    <h3>Privacy First & Offline</h3>
-                    <p>Your media never leave your phone. Analysis and search run entirely on your device, with no cloud uploads and no data mining. After a one-time download of the AI models, no internet connection is needed.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div>
+                    <h3>Describe it</h3>
+                    <p>Type what you remember the way you would say it to a friend. No keywords, folders or tags needed.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="icon">🧾</div>
-                    <h3>Finds Text in Images</h3>
-                    <p>Receipts, documents, screenshots, notes and signs. Search for what they say, not just what they show.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">🌍</div>
-                    <h3>Search in Your Language</h3>
-                    <p>Describe what you are looking for in English, Persian (Farsi) or many other languages, and Memoyad understands.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">🔄</div>
-                    <h3>Works in the Background</h3>
-                    <p>New photos are analyzed on their own as you take them, or only when you choose. You can keep using your phone while it works.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">🔋</div>
-                    <h3>Gentle on Your Battery</h3>
-                    <p>Analysis pauses when your battery runs low or your phone gets warm, and you choose how fast it runs.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">👤</div>
-                    <h3>No Account Needed</h3>
-                    <p>No sign-up, no login, no email address. Install it and start searching.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">📱</div>
-                    <h3>Android First, iOS Next</h3>
-                    <p>Memoyad is launching on Android. An iOS version is on the way; join the waitlist to hear when it is ready.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">✨</div>
-                    <h3>Free Forever Core</h3>
-                    <p>Because our AI runs on your hardware, we don't have massive cloud bills. We pass those savings to you with a generous free-forever tier.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div>
+                    <h3>Find it</h3>
+                    <p>Memoyad shows the best matches right away, like "me and dad laughing at the beach", or the parking receipt you need.</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section id="how-it-works" class="how-it-works">
-        <div class="container">
-            <h2>How It Works</h2>
-            <p class="text-center" style="max-width: 600px; margin: 0 auto 3rem;">Everything happens on your phone. Nothing is uploaded, ever.</p>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div>
-                        <h3>Set up once</h3>
-                        <p>Install Memoyad and let it go through your photos, screenshots and documents once. It runs on your phone and keeps up with new ones as they arrive.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div>
-                        <h3>Describe it</h3>
-                        <p>Type what you remember the way you would say it to a friend. No keywords, folders or tags needed.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div>
-                        <h3>Find it</h3>
-                        <p>Memoyad shows the best matches right away, like "me and dad laughing at the beach", or the parking receipt you need.</p>
-                    </div>
-                </div>
-            </div>
+<section id="comparison" class="comparison">
+    <div class="container">
+        <h2>Why Memoyad?</h2>
+        <div style="overflow-x: auto;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Memoyad</th>
+                        <th>Cloud Apps (Google Photos)</th>
+                        <th>Basic Gallery</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Privacy</strong></td>
+                        <td><span class="check">✔ 100% On-Device</span></td>
+                        <td><span class="cross">✘ Uploads to Cloud</span></td>
+                        <td><span class="check">✔ On-Device</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Search Capability</strong></td>
+                        <td><span class="check">✔ Describe it in your own words</span></td>
+                        <td><span class="check">✔ Good</span></td>
+                        <td><span class="cross">✘ Basic Keywords</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cost</strong></td>
+                        <td><span class="check">✔ Free core, no storage fees</span></td>
+                        <td><span class="cross">✘ Storage fees beyond the free tier</span></td>
+                        <td><span class="check">✔ Free</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Offline Access</strong></td>
+                        <td><span class="check">✔ Works fully offline</span></td>
+                        <td><span class="cross">✘ Limited</span></td>
+                        <td><span class="check">✔ Browsing only</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section id="comparison" class="comparison">
-        <div class="container">
-            <h2>Why Memoyad?</h2>
-            <div style="overflow-x: auto;">
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Feature</th>
-                            <th>Memoyad</th>
-                            <th>Cloud Apps (Google Photos)</th>
-                            <th>Basic Gallery</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Privacy</strong></td>
-                            <td><span class="check">✔ 100% On-Device</span></td>
-                            <td><span class="cross">✘ Uploads to Cloud</span></td>
-                            <td><span class="check">✔ On-Device</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Search Capability</strong></td>
-                            <td><span class="check">✔ Describe it in your own words</span></td>
-                            <td><span class="check">✔ Good</span></td>
-                            <td><span class="cross">✘ Basic Keywords</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Cost</strong></td>
-                            <td><span class="check">✔ Free core, no storage fees</span></td>
-                            <td><span class="cross">✘ Storage fees beyond the free tier</span></td>
-                            <td><span class="check">✔ Free</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Offline Access</strong></td>
-                            <td><span class="check">✔ Works fully offline</span></td>
-                            <td><span class="cross">✘ Limited</span></td>
-                            <td><span class="check">✔ Browsing only</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <section id="download" class="cta">
-        <div class="container">
-            <h2>Reserve Your Spot for Beta Launch</h2>
-            <p>Beta launching October 31, 2026. Join the waitlist and be among the first to try Memoyad. Private, smart, and free.</p>
-            <form id="waitlist-form" class="waitlist-form" action="https://formspree.io/f/xvzbqdgb" method="POST">
-                <input type="email" class="email-input" name="email" placeholder="Enter your email" required>
-                <button type="submit" class="btn-waitlist" id="waitlist-btn">Join Beta Waitlist</button>
-            </form>
-            <p id="waitlist-message" class="waitlist-message" style="display: none;"></p>
-            <p class="waitlist-legal">By joining, you agree to our <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.</p>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Tibaf Inc. All rights reserved.</p>
-            <div style="margin-top: 10px;">
-                <a href="privacy.html" style="color: #B8B8C4; margin: 0 10px; text-decoration: none;">Privacy Policy</a>
-                <a href="terms.html" style="color: #B8B8C4; margin: 0 10px; text-decoration: none;">Terms of Service</a>
-                <a href="contact.html" style="color: #B8B8C4; margin: 0 10px; text-decoration: none;">Contact</a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Video loop with 3-second pause
-        const demoVideo = document.getElementById('demoVideo');
-        if (demoVideo) {
-            demoVideo.addEventListener('ended', function() {
-                setTimeout(() => {
-                    demoVideo.currentTime = 0;
-                    demoVideo.play();
-                }, 2000); // 2-second pause before restart
-            });
-        }
-
-        // Beta waitlist – submissions handled by Formspree
-
-        const waitlistForm = document.getElementById('waitlist-form');
-        const waitlistBtn = document.getElementById('waitlist-btn');
-        const waitlistMessage = document.getElementById('waitlist-message');
-
-        if (waitlistForm) {
-            waitlistForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-
-                waitlistMessage.style.display = 'none';
-                waitlistMessage.className = 'waitlist-message';
-                waitlistBtn.disabled = true;
-                waitlistBtn.textContent = 'Submitting\u2026';
-
-                const data = new FormData(waitlistForm);
-
-                fetch(waitlistForm.action, {
-                    method: waitlistForm.method,
-                    body: data,
-                    headers: { 'Accept': 'application/json' }
-                }).then(response => {
-                    waitlistBtn.disabled = false;
-                    waitlistBtn.textContent = 'Join Beta Waitlist';
-                    waitlistMessage.style.display = 'block';
-
-                    if (response.ok) {
-                        waitlistMessage.className = 'waitlist-message success';
-                        waitlistMessage.textContent = "Thank you! You're on the beta waitlist.";
-                        waitlistForm.reset();
-                    } else {
-                        response.json().then(errData => {
-                            waitlistMessage.className = 'waitlist-message error';
-                            if (Object.hasOwn(errData, 'errors')) {
-                                waitlistMessage.textContent = errData['errors'].map(err => err['message']).join(', ');
-                            } else {
-                                waitlistMessage.textContent = 'Something went wrong. Please try again.';
-                            }
-                        });
-                    }
-                }).catch(() => {
-                    waitlistBtn.disabled = false;
-                    waitlistBtn.textContent = 'Join Beta Waitlist';
-                    waitlistMessage.style.display = 'block';
-                    waitlistMessage.className = 'waitlist-message error';
-                    waitlistMessage.textContent = 'Network error. Please try again.';
-                });
-            });
-        }
-
-        // Simple Smooth Scroll for Anchor Links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Simple Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.feature-card, .step').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease-out';
-            observer.observe(el);
-        });
-    </script>
-</body>
-</html>
+<section id="download" class="cta">
+    <div class="container">
+        <h2>Reserve Your Spot for Beta Launch</h2>
+        <p>Beta launching October 31, 2026. Join the waitlist and be among the first to try Memoyad. Private, smart, and free.</p>
+        <form id="waitlist-form" class="waitlist-form" action="https://formspree.io/f/xvzbqdgb" method="POST">
+            <input type="email" class="email-input" name="email" placeholder="Enter your email" required>
+            <button type="submit" class="btn-waitlist" id="waitlist-btn">Join Beta Waitlist</button>
+        </form>
+        <p id="waitlist-message" class="waitlist-message" style="display: none;"></p>
+        <p class="waitlist-legal">By joining, you agree to our <a href="/terms.html">Terms</a> and <a href="/privacy.html">Privacy Policy</a>.</p>
+    </div>
+</section>

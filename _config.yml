@@ -1,0 +1,8 @@
+# Jekyll settings for GitHub Pages (built automatically on every push).
+title: Memoyad
+url: https://memoyad.com
+# Internal notes, not pages: keep them off the public site.
+exclude:
+  - BRAND.md
+  - CLAUDE.md
+  - README.md

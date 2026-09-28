@@ -1,0 +1,3 @@
+# Jekyll's local build output
+_site/
+.jekyll-cache/
