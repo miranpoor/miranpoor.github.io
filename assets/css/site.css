@@ -6,8 +6,8 @@
     --primary-color: #3A3FC4;      /* Indigo: text links, buttons, logo wordmark */
     --primary-dark: #2C318F;       /* hover / pressed */
     --primary-container: #E0E1FF;  /* tinted backgrounds, chips */
+    --primary-wash: #EEEEFF;       /* the hero background tint */
     --secondary-color: #1CA7D4;    /* Sky: gradient end ONLY, never behind or as text */
-    --sky-deep: #00658A;           /* text-safe partner for gradient text */
     --dark-bg: #121320;
     --light-bg: #FAFAFF;
     --text-color: #1B1B21;
@@ -118,11 +118,15 @@ nav {
     letter-spacing: -0.5px;
     gap: 0;
 }
+.logo { gap: 10px; }
 .logo img {
     height: 36px;
-    width: auto;
+    width: 36px;
     display: block;
 }
+/* The wordmark is text, not part of an image: dark modes and high-contrast modes recolor text,
+   but they leave images alone, which left a dark wordmark on a darkened header. */
+.logo .wordmark { color: var(--primary-color); line-height: 1; }
 
 .nav-links {
     display: flex;
@@ -141,7 +145,10 @@ nav {
     padding-top: 160px;
     padding-bottom: 100px;
     text-align: center;
-    background: linear-gradient(135deg, var(--light-bg) 0%, var(--primary-container) 100%);
+    /* A solid tint, not a gradient: browser dark modes and dark-mode extensions reliably recolor
+       plain background colors, but some leave background gradients light (a light frame around
+       darkened content). Same rule as the headline: nothing that only works in light mode. */
+    background-color: var(--primary-wash);
     border-radius: 0 0 50% 50% / 4%;
 }
 
@@ -149,9 +156,7 @@ nav {
     font-size: 3.5rem;
     max-width: 800px;
     margin: 0 auto 1.5rem;
-    background: -webkit-linear-gradient(45deg, var(--primary-color), var(--sky-deep));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--primary-color);   /* solid, never gradient text: see BRAND.md rule 4 */
 }
 
 .hero p {
@@ -422,7 +427,7 @@ nav {
 /* Same header, footer, fonts and colors as the home page; a narrower column for reading. */
 .page {
     padding: 140px 0 80px;          /* clears the fixed header */
-    background: linear-gradient(180deg, var(--light-bg) 0, var(--white) 320px);
+    background-color: var(--light-bg);   /* solid, not a gradient: see .hero */
 }
 /* Same width as the home page (the shared .container), so every page's content lines up with
    the header logo. */

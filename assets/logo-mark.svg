@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 72 72" role="img" aria-label="Memoyad">
+  <!-- Favicon: the app icon tile. Colors and rules: BRAND.md. Keep the zero-origin viewBox and the
+       explicit width/height: an offset viewBox without them renders cropped in browsers. -->
+  <defs>
+    <linearGradient id="memoyadGrad" x1="18" y1="18" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3A3FC4"/><stop offset="1" stop-color="#1CA7D4"/>
+    </linearGradient>
+    <clipPath id="memoyadLens"><path d="M37.7,50 a12.3,12.3 0 1,1 24.6,0 a12.3,12.3 0 1,1 -24.6,0 Z"/></clipPath>
+  </defs>
+  <g transform="translate(-18,-18)">
+  <rect x="18" y="18" width="72" height="72" rx="17" fill="url(#memoyadGrad)"/>
+  <path d="M32,50 a18,18 0 1,1 36,0 a18,18 0 1,1 -36,0 Z" fill="none" stroke="#FFFFFF" stroke-width="7"/>
+    <path d="M63.79,63.79 L72,72" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round"/>
+    <g clip-path="url(#memoyadLens)" fill="#FFFFFF" fill-opacity="0.95"><path d="M30,70 L30,60 L42.5,48.5 L48.5,54.5 L55.5,46 L70,60 L70,70 Z"/><path d="M41.5,42.5 a3,3 0 1,1 6,0 a3,3 0 1,1 -6,0 Z"/></g>
+    <path d="M70,28.5 Q70,34.5 76,34.5 Q70,34.5 70,40.5 Q70,34.5 64,34.5 Q70,34.5 70,28.5 Z" fill="#FFFFFF"/>
+    <path d="M78,41.5 Q78,44.5 81,44.5 Q78,44.5 78,47.5 Q78,44.5 75,44.5 Q78,44.5 78,41.5 Z" fill="#FFFFFF" fill-opacity="0.85"/>
+  </g>
+</svg>

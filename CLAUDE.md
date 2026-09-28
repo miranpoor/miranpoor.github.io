@@ -49,7 +49,9 @@ python -m http.server 8765 --directory <out>
 
 **Read `BRAND.md` before changing any color, the logo, the favicon or a button style.** It is the
 palette shared with the Android app and its rules (solid colors in the UI, the Indigo → Sky
-gradient only for brand moments, never text on Sky, WCAG AA contrast). Use the CSS variables in
+gradient only inside images, never text on Sky, WCAG AA contrast). Pages must also survive
+browser dark modes, dark-mode extensions and high-contrast mode: no gradient text, no CSS
+gradients behind content, and no text baked into images (BRAND.md rule 4). Use the CSS variables in
 `:root` of `site.css` (`--primary-color`, `--primary-dark`, `--primary-container`, …) rather than
 raw hex values; a new hex value usually means a rule is being broken.
 

@@ -13,10 +13,10 @@ Change them together, or not at all. The icon geometry comes from the app repo's
 |---|---|---|
 | **Indigo** (primary) | `#3A3FC4` | Buttons, links, the logo wordmark, section bands (CTA), the app header |
 | Indigo dark | `#2C318F` | Hover and pressed states |
-| Indigo container | `#E0E1FF` | Tinted backgrounds, chips, the hero wash |
+| Indigo container | `#E0E1FF` | Tinted backgrounds, chips, callout boxes |
+| Indigo wash | `#EEEEFF` | The home page hero background (website only) |
 | On Indigo container | `#10156E` | Text on Indigo container |
 | **Sky** (gradient end) | `#1CA7D4` | The second stop of the brand gradient. **Never behind text, never as text** |
-| Sky deep | `#00658A` | The text-safe partner for gradient text (see below) |
 | Background (light) | `#FAFAFF` | Page background, alternate sections |
 | Ink | `#1B1B21` | Body text and headings |
 | Ink muted | `#46464F` | Secondary text |
@@ -31,13 +31,21 @@ Pick them for meaning and contrast, not to match the palette.
 
 1. **Solid colors for UI.** Buttons, links, headers and bands are solid Indigo (or white on an
    Indigo band). Hover darkens to Indigo dark.
-2. **The gradient is for brand moments only:** the app icon, the logo tile, the favicon, the Play
-   Store feature graphic, and at most one accent per page (a thin bar, a hero wash). It runs
-   Indigo → Sky at 135° (top-left to bottom-right).
+2. **The gradient is for images only:** the app icon, the logo tile, the favicon, the Play Store
+   feature graphic and the social preview image. It runs Indigo → Sky at 135° (top-left to
+   bottom-right). On web pages, never as a CSS background behind content and never as text.
 3. **Never put text on Sky or on the Sky end of the gradient.** White on Sky is 2.8:1, and Sky on
    white is 2.7:1; text needs 4.5:1 (3:1 for large headings).
-4. **Gradient text** (the hero headline, and nothing else) uses Indigo → **Sky deep**, which stays
-   at 5.1:1 or better on the hero background.
+4. **Everything must survive dark-mode tools.** Many visitors darken sites with browser settings
+   (Chrome and Edge forced dark mode), extensions (Dark Reader and others) or Windows
+   high-contrast mode. These tools recolor plain text and plain background colors reliably, and
+   break anything cleverer. So:
+   - **No gradient text.** Transparent text over a background is invisible once the background
+     is darkened. Headlines are solid Indigo.
+   - **No CSS gradients behind content.** Some tools leave them light, which shows as a light
+     frame around darkened content. Use a solid tint (Indigo wash, Background light).
+   - **No text baked into images** where the page can use real text. The header wordmark is HTML
+     text next to the icon tile, so it recolors with the page.
 5. **Contrast.** Every text/background pair must meet WCAG AA: 4.5:1 for body text, 3:1 for text
    of 24px and up, or 19px and up if bold. Check new pairs before shipping; the pairs in the
    table above already pass.
@@ -49,7 +57,8 @@ Pick them for meaning and contrast, not to match the palette.
 
 | File | What it is |
 |---|---|
-| `assets/logo.svg` | Header logo: the icon tile plus the "Memoyad" wordmark in Indigo, 180×40 |
+| `assets/logo-mark.svg` | The icon tile on its own, used in the site header next to the text wordmark (same drawing as `favicon.svg`) |
+| `assets/logo.svg` | Standalone logo (tile plus "Memoyad" wordmark in Indigo, 180×40) for use outside the site: documents, press, partner pages. The site header does not use it (rule 4) |
 | `favicon.svg` | Browser icon: the icon tile with rounded corners. Keep its zero-origin `viewBox` and explicit `width`/`height`; an offset viewBox without them rendered cut in half in browser tabs |
 | `favicon.ico` | Fallback favicon, 16/32/48 px |
 | `apple-touch-icon.png` | iOS home-screen icon, 180×180, square (iOS rounds it) |
