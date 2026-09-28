@@ -7,16 +7,20 @@
     <meta name="description" content="Search and Organize your Media using Natural language. 100% on-device, privacy-first, and free forever core features.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="alternate icon" href="favicon.ico">
-    <link rel="apple-touch-icon" href="favicon.svg">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta name="theme-color" content="#3A3FC4">
     <style>
         :root {
-            --primary-color: #6200EE; /* Matching app purple */
-            --secondary-color: #03DAC5; /* Matching app teal */
-            --accent-orange: #FF6B35;
-            --dark-bg: #121212;
-            --light-bg: #f8f9fa;
-            --text-color: #333;
-            --text-light: #666;
+            /* Brand palette "Indigo": see BRAND.md. Same values as the Android app (ui/theme/Color.kt). */
+            --primary-color: #3A3FC4;      /* Indigo: text links, buttons, logo wordmark */
+            --primary-dark: #2C318F;       /* hover / pressed */
+            --primary-container: #E0E1FF;  /* tinted backgrounds, chips */
+            --secondary-color: #1CA7D4;    /* Sky: gradient end ONLY, never behind or as text */
+            --sky-deep: #00658A;           /* text-safe partner for gradient text */
+            --dark-bg: #121320;
+            --light-bg: #FAFAFF;
+            --text-color: #1B1B21;
+            --text-light: #46464F;
             --white: #ffffff;
             --max-width: 1200px;
             --transition: all 0.3s ease;
@@ -79,9 +83,9 @@
         }
 
         .btn-primary:hover {
-            background-color: #3700B3;
+            background-color: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(98, 0, 238, 0.3);
+            box-shadow: 0 4px 12px rgba(58, 63, 196, 0.3);
         }
 
         .btn-outline {
@@ -146,7 +150,7 @@
             padding-top: 160px;
             padding-bottom: 100px;
             text-align: center;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, var(--light-bg) 0%, var(--primary-container) 100%);
             border-radius: 0 0 50% 50% / 4%;
         }
 
@@ -154,7 +158,7 @@
             font-size: 3.5rem;
             max-width: 800px;
             margin: 0 auto 1.5rem;
-            background: -webkit-linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            background: -webkit-linear-gradient(45deg, var(--primary-color), var(--sky-deep));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -253,7 +257,7 @@
 
         /* How it Works */
         .how-it-works {
-            background-color: #f8f9fa;
+            background-color: var(--light-bg);
         }
 
         .steps {
@@ -337,8 +341,8 @@
             margin-bottom: 16px;
         }
         .waitlist-form .btn-waitlist {
-            background-color: var(--secondary-color);
-            color: var(--dark-bg);
+            background-color: var(--white);
+            color: var(--primary-color);
             padding: 12px 24px;
             width: 180px;
             font-size: 1rem;
@@ -349,10 +353,10 @@
             white-space: nowrap;
         }
         .waitlist-form .btn-waitlist:hover {
-            background-color: #02b8a8;
-            color: var(--dark-bg);
+            background-color: var(--primary-container);
+            color: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(3, 218, 197, 0.4);
+            box-shadow: 0 4px 12px rgba(18, 19, 32, 0.25);
         }
         .waitlist-form .email-input {
             padding: 12px 20px;
@@ -388,7 +392,7 @@
             font-size: 0.95rem;
         }
         .waitlist-message.success { color: #a5d6a7; }
-        .waitlist-message.error { color: #ffab91; }
+        .waitlist-message.error { color: #FFC4B3; }
 
         /* Footer */
         footer {

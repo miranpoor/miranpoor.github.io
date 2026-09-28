@@ -1,16 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 40" fill="none" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 40" fill="none" role="img" aria-label="Memoyad">
+  <!-- Memoyad logo: app icon tile + wordmark. Colors and rules: BRAND.md. Icon geometry comes from
+       the Android app's tools/icon/gen.py; regenerate both together if the icon changes. -->
   <defs>
-    <linearGradient id="memoyadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#6200EE"/>
-      <stop offset="100%" style="stop-color:#03DAC5"/>
+    <linearGradient id="memoyadGrad" x1="18" y1="18" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3A3FC4"/><stop offset="1" stop-color="#1CA7D4"/>
     </linearGradient>
+    <clipPath id="memoyadLens"><path d="M37.7,50 a12.3,12.3 0 1,1 24.6,0 a12.3,12.3 0 1,1 -24.6,0 Z"/></clipPath>
   </defs>
-  <!-- Icon: magnifying glass = search your memories -->
-  <g transform="translate(2, 2)">
-    <circle cx="14" cy="14" r="12" stroke="url(#memoyadGrad)" stroke-width="2.5" fill="none"/>
-    <path d="M 20 20 L 28 28" stroke="url(#memoyadGrad)" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="14" cy="14" r="4" fill="url(#memoyadGrad)" opacity="0.4"/>
+  <g transform="translate(2,2) scale(0.5) translate(-18,-18)">
+    <rect x="18" y="18" width="72" height="72" rx="17" fill="url(#memoyadGrad)"/>
+    <path d="M32,50 a18,18 0 1,1 36,0 a18,18 0 1,1 -36,0 Z" fill="none" stroke="#FFFFFF" stroke-width="7"/>
+    <path d="M63.79,63.79 L72,72" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round"/>
+    <g clip-path="url(#memoyadLens)" fill="#FFFFFF" fill-opacity="0.95"><path d="M30,70 L30,60 L42.5,48.5 L48.5,54.5 L55.5,46 L70,60 L70,70 Z"/><path d="M41.5,42.5 a3,3 0 1,1 6,0 a3,3 0 1,1 -6,0 Z"/></g>
+    <path d="M70,28.5 Q70,34.5 76,34.5 Q70,34.5 70,40.5 Q70,34.5 64,34.5 Q70,34.5 70,28.5 Z" fill="#FFFFFF"/>
+    <path d="M78,41.5 Q78,44.5 81,44.5 Q78,44.5 78,47.5 Q78,44.5 75,44.5 Q78,44.5 78,41.5 Z" fill="#FFFFFF" fill-opacity="0.85"/>
   </g>
-  <!-- Wordmark -->
-  <text x="48" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="800" letter-spacing="-0.5" fill="#6200EE">Memoyad</text>
+  <text x="46" y="28" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="800" letter-spacing="-0.5" fill="#3A3FC4">Memoyad</text>
 </svg>
