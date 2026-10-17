@@ -436,6 +436,8 @@ nav {
     .hero h1 { font-size: 2.5rem; }
     .nav-links { display: none; }
     .step { flex-direction: column; text-align: center; align-items: center; }
+    .feature-grid { gap: 20px; }          /* cards stack in one column here; 40px read as empty space */
+    .br-wide { display: none; }           /* a line break that only shapes wide layouts */
 }
 
 /* ---------- Header button ---------- */
