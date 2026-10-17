@@ -337,6 +337,25 @@ nav {
     background: #f0f0f0;
 }
 
+/* Google Play badge (assets/img/google-play-badge.svg): Google's artwork, shown as-is. Google asks
+   for at least 40px of height and a link to the store page; the hover lift matches .btn-primary.
+   It is an image with its own black background, so dark-mode tools leave it readable. */
+.play-badge { display: inline-block; line-height: 0; transition: var(--transition); }
+.play-badge img { height: 56px; width: auto; display: block; }
+.play-badge:hover { transform: translateY(-2px); }
+.play-badge-large img { height: 64px; }
+.hero-note { font-size: 0.95rem; margin: -24px auto 40px; }
+
+/* The iOS waitlist sits under the Play badge in the same band, separated by a hairline. */
+.cta .waitlist {
+    max-width: 640px;
+    margin: 48px auto 0;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+.cta h3 { color: white; font-size: 1.35rem; margin-bottom: 0.5rem; }
+.cta .waitlist p { margin-bottom: 20px; }
+
 .waitlist-form {
     display: flex;
     gap: 12px;

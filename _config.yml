@@ -6,3 +6,8 @@ exclude:
   - BRAND.md
   - CLAUDE.md
   - README.md
+# The app on Google Play. play_url is the bare store page (use it in structured data and when
+# someone asks for "the link"); play_link adds the UTM tags Play Console's Store analysis reports
+# under third-party referrals, so visits from this site can be told apart from Play search.
+play_url: "https://play.google.com/store/apps/details?id=com.tibaf.memoyad"
+play_link: "https://play.google.com/store/apps/details?id=com.tibaf.memoyad&utm_source=memoyad.com&utm_medium=website"

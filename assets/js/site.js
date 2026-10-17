@@ -11,7 +11,7 @@ if (demoVideo) {
     });
 }
 
-// Beta waitlist – submissions handled by Formspree
+// iOS waitlist (home page) – submissions handled by Formspree
 
 const waitlistForm = document.getElementById('waitlist-form');
 const waitlistBtn = document.getElementById('waitlist-btn');
@@ -34,12 +34,12 @@ if (waitlistForm) {
             headers: { 'Accept': 'application/json' }
         }).then(response => {
             waitlistBtn.disabled = false;
-            waitlistBtn.textContent = 'Join Beta Waitlist';
+            waitlistBtn.textContent = 'Join iOS Waitlist';
             waitlistMessage.style.display = 'block';
 
             if (response.ok) {
                 waitlistMessage.className = 'waitlist-message success';
-                waitlistMessage.textContent = "Thank you! You're on the beta waitlist.";
+                waitlistMessage.textContent = "Thank you! We'll email you when Memoyad for iOS is ready.";
                 waitlistForm.reset();
             } else {
                 response.json().then(errData => {
@@ -53,7 +53,7 @@ if (waitlistForm) {
             }
         }).catch(() => {
             waitlistBtn.disabled = false;
-            waitlistBtn.textContent = 'Join Beta Waitlist';
+            waitlistBtn.textContent = 'Join iOS Waitlist';
             waitlistMessage.style.display = 'block';
             waitlistMessage.className = 'waitlist-message error';
             waitlistMessage.textContent = 'Network error. Please try again.';

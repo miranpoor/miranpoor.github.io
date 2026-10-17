@@ -12,7 +12,9 @@ Marketing site for the Memoyad app. GitHub Pages builds it with **Jekyll** on ev
 | `assets/css/site.css` | All styles for every page. The site is light-only by design |
 | `assets/js/site.js` | All scripts (demo video loop, waitlist form, contact form, fade-in). Each block no-ops on pages without its elements |
 | `index.html`, `privacy.html`, `terms.html`, `contact.html` | Page content only, each starting with a front-matter block |
-| `_config.yml` | Jekyll settings. `exclude` keeps internal notes (this file, `BRAND.md`) off the public site |
+| `android.html` | `memoyad.com/android`: a readable short link that redirects to the Google Play listing (Play only offers the package-name URL). No layout |
+| `assets/img/google-play-badge.svg` | Google's official "Get it on Google Play" badge. Use it as-is: no recoloring or restyling, at least 40px tall, always linked to the store page |
+| `_config.yml` | Jekyll settings. `exclude` keeps internal notes (this file, `BRAND.md`) off the public site. Holds `play_url` (the bare store page) and `play_link` (the same with UTM tags); every link to the store uses one of these, never a pasted URL |
 
 **Adding a page:** create `name.html` with front matter and wrap the content like the other
 subpages do:
@@ -59,5 +61,10 @@ raw hex values; a new hex value usually means a rule is being broken.
 
 - American English. Say "media", not "photos", unless a sentence is specifically about images.
 - Only claim what the app does today. Features that are planned say so ("on the way").
-- **Until the provisional patent is filed, describe what Memoyad does for the user, never how it
-  works.** No mention of how media are analyzed, indexed, embedded, ranked or matched, on any page.
+- **Describe what Memoyad does for the user, not how it works.** The provisional patent was filed in
+  October 2026, so this is no longer a legal constraint, but the marketing pages still stay away from
+  how media are analyzed, indexed, embedded, ranked or matched: that story belongs in the app repo's
+  docs, not here.
+- **Status (2026-10-17):** the Android app is live on Google Play (1.2.0). The home page's download
+  section shows the Play badge and keeps a waitlist for iOS only. "Beta" and "launching on" wording
+  is gone and must not come back.

@@ -2,17 +2,20 @@
 layout: default
 title: "Memoyad: Private, On-Device Media Search"
 og_title: "Memoyad: find any memory by describing it"
-description: Find any memory in your gallery by describing it. 100% on-device and private, with free-forever core features.
-og_description: Private, on-device AI search for your photos and screenshots. Nothing is uploaded.
+description: "Find any memory in your gallery by describing it. 100% on-device and private. Free on Google Play, with iOS on the way."
+og_description: "Private, on-device AI search for your photos and screenshots. Nothing is uploaded. Now on Google Play."
 ---
 <section class="hero">
     <div class="container">
         <h1>Find Any Memory by Simply Describing It.</h1>
         <p>100% On-Device. 100% Private. Free Forever.</p>
         <div class="hero-actions">
-            <a href="#download" class="btn btn-primary">Join the Android Beta</a>
-            <a href="#download" class="btn btn-outline">Join iOS Waitlist</a>
+            <!-- Google's official badge, used as-is (Google's badge guidelines: no restyling, at least
+                 40px tall, always linked to the store page). -->
+            <a href="{{ site.play_link }}" class="play-badge"><img src="/assets/img/google-play-badge.svg?v={{ site.time | date: '%s' }}" alt="Get it on Google Play" width="180" height="53"></a>
+            <a href="#download" class="btn btn-outline">iPhone? Join the iOS Waitlist</a>
         </div>
+        <p class="hero-note">Free on Google Play for Android 12 and newer. No account needed.</p>
         <div class="device-mockup">
             <div class="device-screen">
                 <!-- The video goes INSIDE the device-screen div -->
@@ -66,8 +69,8 @@ og_description: Private, on-device AI search for your photos and screenshots. No
             </div>
             <div class="feature-card">
                 <div class="icon">📱</div>
-                <h3>Android First, iOS Next</h3>
-                <p>Memoyad is launching on Android. An iOS version is on the way; join the waitlist to hear when it is ready.</p>
+                <h3>On Android Now, iOS Next</h3>
+                <p>Memoyad is available today on <a href="{{ site.play_link }}">Google Play</a>. An iOS version is on the way; <a href="#download">join the waitlist</a> to hear when it is ready.</p>
             </div>
             <div class="feature-card">
                 <div class="icon">✨</div>
@@ -154,17 +157,44 @@ og_description: Private, on-device AI search for your photos and screenshots. No
 
 <section id="download" class="cta">
     <div class="container">
-        <h2>Reserve Your Spot for Beta Launch</h2>
-        <p>Beta launching October 31, 2026. Join the waitlist and be among the first to try Memoyad. Private, smart, and free.</p>
-        <form id="waitlist-form" class="waitlist-form" action="https://formspree.io/f/xvzbqdgb" method="POST">
-            <input type="email" class="email-input" name="email" placeholder="Enter your email" required>
-            <button type="submit" class="btn-waitlist" id="waitlist-btn">Join Beta Waitlist</button>
-        </form>
-        <p id="waitlist-message" class="waitlist-message" style="display: none;"></p>
-        <!-- Consent wording required by Canada's anti-spam law (CASL): what they will receive, from whom,
-             sender contact details, and that they can unsubscribe. Kept separate from the Terms. -->
-        <p class="waitlist-legal">By joining, you agree to receive emails about the Memoyad beta and launch.
-            You can unsubscribe at any time. Mehran Iranpour, ON, Canada, support@memoyad.com.
-            See our <a href="/privacy.html">Privacy Policy</a>.</p>
+        <h2>Memoyad Is Live on Google Play</h2>
+        <p>Free, private, and no account needed. Works on 64-bit phones running Android 12 or newer. First-time setup downloads the on-device AI models (about 3.8 GB), so start on Wi-Fi.</p>
+        <a href="{{ site.play_link }}" class="play-badge play-badge-large"><img src="/assets/img/google-play-badge.svg?v={{ site.time | date: '%s' }}" alt="Get it on Google Play" width="180" height="53"></a>
+
+        <div class="waitlist">
+            <h3>Using an iPhone?</h3>
+            <p>Memoyad for iOS is on the way. Leave your email and we will tell you when it is ready.</p>
+            <form id="waitlist-form" class="waitlist-form" action="https://formspree.io/f/xvzbqdgb" method="POST">
+                <!-- Tells the iOS sign-ups apart from the earlier beta sign-ups in the Formspree inbox. -->
+                <input type="hidden" name="platform" value="ios">
+                <input type="hidden" name="_subject" value="Memoyad iOS waitlist sign-up">
+                <input type="email" class="email-input" name="email" placeholder="Enter your email" required>
+                <button type="submit" class="btn-waitlist" id="waitlist-btn">Join iOS Waitlist</button>
+            </form>
+            <p id="waitlist-message" class="waitlist-message" style="display: none;"></p>
+            <!-- Consent wording required by Canada's anti-spam law (CASL): what they will receive, from whom,
+                 sender contact details, and that they can unsubscribe. Kept separate from the Terms. -->
+            <p class="waitlist-legal">By joining, you agree to receive emails about Memoyad for iOS and major Memoyad news.
+                You can unsubscribe at any time. Mehran Iranpour, ON, Canada, support@memoyad.com.
+                See our <a href="/privacy.html">Privacy Policy</a>.</p>
+        </div>
     </div>
 </section>
+
+<!-- Structured data for search engines: the app, its platform, its price and where to install it. -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    "name": "Memoyad: AI Media Organizer",
+    "alternateName": "Memoyad",
+    "operatingSystem": "Android 12 or newer",
+    "applicationCategory": "MultimediaApplication",
+    "description": "Find any memory in your gallery by describing it in your own words. On-device AI search for photos, screenshots and documents: private, offline, and free.",
+    "url": "https://memoyad.com/",
+    "installUrl": "{{ site.play_url }}",
+    "image": "https://memoyad.com/assets/og-image.png",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Mehran Iranpour" }
+}
+</script>
