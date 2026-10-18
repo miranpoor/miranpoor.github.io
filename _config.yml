@@ -1,10 +1,11 @@
 # Jekyll settings for GitHub Pages (built automatically on every push).
 title: Memoyad
 url: https://memoyad.com
-# Internal notes, not pages: keep them off the public site.
+# Internal notes are untracked (see .gitignore); this keeps a local Jekyll build from turning them into pages.
 exclude:
-  - BRAND.md
+  - CLAUDE.local.md
   - CLAUDE.md
+  - BRAND.md
   - README.md
 # The app on Google Play. play_url is the bare store page (use it in structured data and when
 # someone asks for "the link"); play_link adds the UTM tags Play Console's Store analysis reports
